@@ -7,6 +7,10 @@ Status](https://coveralls.io/repos/github/mrzmmr/remark-extract-frontmatter/badg
 
 ## Install
 
+```sh
+npm install --save remark-extract-frontmatter
+```
+
 ## Usage
 
 ```js
