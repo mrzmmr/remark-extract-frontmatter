@@ -90,4 +90,4 @@ Pass in a function to parse the selected nodes value, i.e require('yamljs').pars
 
 ### License
 
-MIT $copy; Paul Zimmer
+MIT &copy; Paul Zimmer
