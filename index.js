@@ -61,7 +61,6 @@ function parseFrontMatter (options) {
          * Replace Tokenizer with decorated tokenizer
          */
         blockTokenizers[method] = decorate(tokenizer, parse, name, options)
-        //tokenizer = decorate(tokenizer, parse, name, options)
       }
     }
   }
