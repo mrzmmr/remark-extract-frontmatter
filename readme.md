@@ -42,6 +42,6 @@ VFile {
   data: { title: 'hello' },
   messages: [],
   history: [],
-  cwd: '/home/ubuntu/workspace/remark-extract-frontmatter',
+  cwd: '/remark-extract-frontmatter',
   contents: '---\ntitle: "hello"\n---\n' }
 ```
