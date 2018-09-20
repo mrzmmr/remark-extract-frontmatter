@@ -1,4 +1,5 @@
 # remark-extract-frontmatter
+
 Stores front matter from markdown in VFiles data property
 
 [![Travis](https://img.shields.io/travis/mrzmmr/remark-extract-frontmatter.svg)](https://travis-ci.org/mrzmmr/remark-extract-frontmatter)
@@ -14,35 +15,33 @@ npm install --save remark-extract-frontmatter
 ## Usage
 
 ```js
+const extract = require('remark-extract-frontmatter')
 const frontmatter = require('remark-frontmatter')
-const stringify = require('remark-stringify')
+const compiler = require('remark-stringify')
+const report = require('vfile-reporter')
 const parser = require('remark-parse')
 const unified = require('unified')
-const toml = require('toml').parse
+const yaml = require('yaml')
 
-const extractFrontmatter = require('remark-extract-frontmatter')
-
-const vFile = unified()
-.use(parser)
-.use(stringify)
-.use(frontmatter, [ 'toml' ])
-.use(extractFrontmatter, { type: 'toml', parser: toml })
-.processSync(`
-+++
-title: "Hello"
-+++
-
-## World!
-`)
+unified()
+  .use(parser)
+  .use(compiler)
+  .use(frontmatter)
+  .use(extract, yaml.parse)
+  .process('---\ntitle: "hello"\n---\n', function (err, file) {
+    console.error(report(err || file))
+    console.log(file)
+  })
 ```
 
-Outputs the following `VFile`
+Would output the following VFile:
 
-```js
+```
+no issues found
 VFile {
-  data: { frontmatter: [ { title: 'Hello' } ] },
+  data: { title: 'hello' },
   messages: [],
   history: [],
-  cwd: '/home',
-  contents: '+++\ntitle = "Hello"\n+++\n\n## World!\n' }
+  cwd: '/home/ubuntu/workspace/remark-extract-frontmatter',
+  contents: '---\ntitle: "hello"\n---\n' }
 ```
