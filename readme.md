@@ -54,7 +54,7 @@ Type: `Function`
 
 Default: `null`
 
-Function used to parse frontmatter type for example `{ yaml: require('yaml').parse }` would use the yaml modules parse function for nodes of type `yamlFrontmatter`. If no parse function is given for a type, then the node is skipped and parsed as normal. If no parse functions are set for any types then this plugin does nothing.
+Function used to parse frontmatter type for example `{ yaml: require('yaml').parse }` would use the yaml modules parse function for nodes of type `yamlFrontMatter`. If no parse function is given for a type, then the node is skipped and parsed as normal. If no parse functions are set for any types then this plugin does nothing.
 
 #### name
 
