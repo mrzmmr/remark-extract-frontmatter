@@ -1,8 +1,8 @@
-module.exports = parseFrontMatter
+module.exports = extract
 
 var xtend = require('xtend')
 
-function parseFrontMatter (options) {
+function extract (options) {
   var blockTokenizers
   var blockMethods
   var tokenizer
