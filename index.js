@@ -42,11 +42,11 @@ function extract (options) {
        */
       method = methods[i]
       /**
-       * Name of the parser for frontmatter, i.e "yaml"
+       * Name of the parser for frontmatter, e.g. "yaml"
        */
       name = method.replace('FrontMatter', '')
       /**
-       * Actual function to parse frontmatter, i.e `yaml.parse`
+       * Actual function to parse frontmatter, e.g. `yaml.parse`
        */
       parse = parsers[name]
       /**
@@ -68,9 +68,9 @@ function extract (options) {
 
 /**
  * Returns a decorator for blockTokenizer
- * tokenizer - The tokenizer to decorate, i.e yamlFrontMatter
- * parse - A parse function to run on found frontmatter, i.e `yamljs.parse`
- * name - The name of type of frontmatter to be parsed, i.e "yaml"
+ * tokenizer - The tokenizer to decorate, e.g. yamlFrontMatter
+ * parse - A parse function to run on found frontmatter, e.g. `yamljs.parse`
+ * name - The name of type of frontmatter to be parsed, e.g. "yaml"
  * options - Any options to use
  */
 function decorate (tokenizer, parse, name, options) {
@@ -105,7 +105,7 @@ function decorate (tokenizer, parse, name, options) {
 /**
  * Handles errors such as creating a new `vfile.message` when parsing fails
  * err - The Error object produced
- * name - The name of type of frontmatter, i.e 'yaml'
+ * name - The name of type of frontmatter, e.g. 'yaml'
  * options - Any options
  */
 function error (err, file, name, options) {
@@ -129,7 +129,7 @@ function error (err, file, name, options) {
 
 /**
  * Locate any frontMatter methods that have been attatched to the Parser
- * methods - A list of blockMethods, i.e [ "yamlFrontMatter" ]
+ * methods - A list of blockMethods, e.g. [ "yamlFrontMatter" ]
  */
 function locate (methods) {
   var found = []
