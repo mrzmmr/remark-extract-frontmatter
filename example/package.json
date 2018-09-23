@@ -2,11 +2,10 @@
   "name": "remark-extract-frontmatter-example",
   "dependencies": {
     "remark-frontmatter": "^1.2.1",
-    "remark-html": "^8.0.0",
     "remark-parse": "^5.0.0",
     "remark-stringify": "^5.0.0",
     "to-vfile": "^5.0.1",
-    "toml": "^2.3.3",
-    "unified": "^7.0.0"
+    "unified": "^7.0.0",
+    "vfile-reporter": "^5.0.0"
   }
 }
