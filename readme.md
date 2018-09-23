@@ -14,36 +14,59 @@ npm install --save remark-extract-frontmatter
 
 ## Usage
 
+If we have some markdown using yaml frontmatter, example.md
+
+```
+---
+title: Example
+list:
+  - one
+  - 0
+  - false
+---
+
+# Other markdown
+```
+
+and
+
 ```js
 const extract = require('remark-extract-frontmatter')
 const frontmatter = require('remark-frontmatter')
 const compiler = require('remark-stringify')
 const report = require('vfile-reporter')
 const parser = require('remark-parse')
+const toVfile = require('to-vfile')
 const unified = require('unified')
-const yaml = require('yaml')
+const yaml = require('yaml').parse
 
 unified()
   .use(parser)
   .use(compiler)
   .use(frontmatter)
-  .use(extract, yaml.parse)
-  .process('---\ntitle: "hello"\n---\n', function (err, file) {
+  .use(extract, { yaml: yaml })
+  .process(toVfile.readSync('./example.md'), function (err, file) {
     console.error(report(err || file))
-    console.log(file)
+    console.log(file.toString())
+    console.log(file.data)
   })
 ```
 
-Would output the following VFile:
+Will output the following VFile:
 
 ```
-no issues found
-VFile {
-  data: { title: 'hello' },
-  messages: [],
-  history: [],
-  cwd: '/remark-extract-frontmatter',
-  contents: '---\ntitle: "hello"\n---\n' }
+./example.md: no issues found
+---
+title: 'Example'
+list:
+  - one
+  - 0
+  - false
+---
+
+# Other markdown
+
+{ title: 'Example', list: [ 'one', 0, false ] }
 ```
 
 ### Options
@@ -54,15 +77,7 @@ Type: `Function`
 
 Default: `null`
 
-Functions used to parse frontmatter types, set as key (type e.g. 'yaml') value (function e.g. require('yaml').parse) pairs. If no parse functions are given for any type, then this plugin does nothing by default. For example:
-```js
-var options = {
-  toml: require('toml').parse
-}
-```
-
-will parse `tomlFrontMatter` using the toml modules parse function.
-
+Specify the function (value) to use when parsing a frontmatter type (key). For example for yaml, options could be `{ yaml: require('yaml').parse }`, or for toml `{ toml: require('toml').parse }`. If no parsing function is set then this plugin will do nothing by default.
 
 #### name
 
@@ -72,6 +87,24 @@ Default: `null`
 
 Specify a key to store frontmatter in for example, `{ name: 'frontmatter' }` will store any parsed frontmatter as `data: { frontmatter: { ... } }`. By default the parsed frontmatter is merged into the data object.
 
+Example:
+
+```js
+unified()
+  .use(parser)
+  .use(compiler)
+  .use(frontmatter, [ 'toml' ])
+  .use(extract, { name: 'frontmatter', toml: toml.parse })
+  .process('+++\ntitle: "Example"\n+++', function (err, file) {
+    console.log(file.data)
+  })
+```
+
+Will output
+
+```
+{ frontmatter: { title: 'Example' } }
+```
 
 #### throws
 
