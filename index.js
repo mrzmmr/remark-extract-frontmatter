@@ -182,4 +182,3 @@ function settings (options) {
 function isParser (parser) {
   return Boolean(parser && parser.prototype && parser.prototype.blockMethods)
 }
-

@@ -1,6 +1,6 @@
 # remark-extract-frontmatter
 
-Stores front matter from markdown in VFiles data property
+[Remark](http://github.com/syntax-tree/remark) plugin to store front matter from markdown.
 
 [![Travis](https://img.shields.io/travis/mrzmmr/remark-extract-frontmatter.svg)](https://travis-ci.org/mrzmmr/remark-extract-frontmatter)
 [![Coverage
@@ -8,7 +8,7 @@ Status](https://coveralls.io/repos/github/mrzmmr/remark-extract-frontmatter/badg
 
 ## Install
 
-```sh
+```
 npm install --save remark-extract-frontmatter
 ```
 
@@ -52,7 +52,7 @@ unified()
   })
 ```
 
-Will output
+will output
 
 ```
 ./example.md: no issues found
@@ -100,7 +100,7 @@ unified()
   })
 ```
 
-Will output
+will output
 
 ```
 { frontmatter: { title: 'Example' } }
@@ -114,5 +114,6 @@ Default: `false`
 
 Specify if when an error parsing frontmatter occurs, to fail and throw error using `VFile.fail` or continue and set a warning using `VFile.message`.
 
+### License
 
 MIT &copy; Paul Zimmer
