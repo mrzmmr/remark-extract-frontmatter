@@ -52,7 +52,7 @@ unified()
   })
 ```
 
-Will output the following VFile:
+Will output
 
 ```
 ./example.md: no issues found
@@ -71,7 +71,7 @@ list:
 
 ### Options
 
-#### ...parsers
+#### Options[parser]
 
 Type: `Function`
 
