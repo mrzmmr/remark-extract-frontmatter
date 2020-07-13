@@ -10,6 +10,8 @@ function extract (options) {
   var methods
   var method
   var parse
+  var parser
+  var proto
   var name
   var index
   var i
