@@ -30,7 +30,7 @@ test('remark-extract-frontmatter', function (t) {
       file = processor()
         .use(extract, toml)
         .processSync(okYaml)
-      
+
       it.ok(file)
       it.end()
     })

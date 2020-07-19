@@ -19,7 +19,7 @@ function extract (options) {
   options = settings(options)
 
   if (!options || !options.parsers) {
-      return
+    return
   }
 
   parsers = options.parsers
@@ -38,7 +38,7 @@ function extract (options) {
     index = blockMethods.indexOf(methods[0])
     i = -1
 
-    while (++i < methods.length){ 
+    while (++i < methods.length){
       /**
        * Block method to identify tokenizer
        */
@@ -153,7 +153,7 @@ function locate (methods) {
  *
  * options - Object of options, or a function to parse frontmatter
  * options.throws - Boolean whether to throw when there's an error or not
- * options.name - The name to store parsed frontmatter as in 
+ * options.name - The name to store parsed frontmatter as in
  */
 function settings (options) {
   var parsers
