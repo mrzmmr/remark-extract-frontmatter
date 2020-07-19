@@ -13,7 +13,6 @@ function extract (options) {
   var parser
   var proto
   var name
-  var index
   var i
 
   options = settings(options)
@@ -35,7 +34,6 @@ function extract (options) {
       return
     }
 
-    index = blockMethods.indexOf(methods[0])
     i = -1
 
     while (++i < methods.length){
