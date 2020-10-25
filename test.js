@@ -1,109 +1,95 @@
-var unified = require('unified')
-var parser = require('remark-parse')
-var compiler = require('remark-stringify')
-var frontmatter = require('remark-frontmatter')
-var yaml = require('yaml').parse
-var toml = require('toml').parse
-var test = require('tap').test
+const remark = require('remark')
+const frontmatter = require('remark-frontmatter')
+const { parse: yaml } = require('yaml')
+const { parse: toml } = require('toml')
+const { test } = require('tap')
+const extract = require('.')
 
-var extract = require('.')
+const okYaml = `---\ntest: ok\n---\n`
+const okToml = `+++\ntest = "ok"\n+++\n`
+const badToml = `+++\ntest: ok\n+++\n`
 
-var okYaml = '---\ntest: ok\n---\n'
-var okToml = '+++\ntest = "ok"\n+++\n'
-var badToml = '+++\ntest: ok\n+++\n'
+test('remark-extract-frontmatter', test => {
+    const processor = remark()
+        .use(frontmatter, ['yaml', 'toml'])
 
-test('remark-extract-frontmatter', function (t) {
-  var processor = unified()
-    .use(parser)
-    .use(compiler)
+    let file
 
-  t.doesNotThrow(function () {
-    t.test('Does not modify tokenizer.', function (it) {
-      var file = processor()
-        .use(frontmatter)
-        .use(extract)
-        .processSync(okYaml)
+    test.test('Does nothing when given nothing', test => {
+        const file = processor()
+            .use(extract)
+            .processSync(okYaml)
 
-      it.ok(file)
-      it.ok(JSON.stringify(file.data) === '{}')
-
-      file = processor()
-        .use(extract, toml)
-        .processSync(okYaml)
-
-      it.ok(file)
-      it.end()
-    })
-    t.test('Extracts frontmatter given parser', function (it) {
-      var file = processor()
-        .use(frontmatter)
-        .use(extract, yaml)
-        .processSync(okYaml)
-
-      it.ok(file.data.test)
-      it.ok(file.data.test === 'ok')
-      it.end()
-    })
-    t.test('Works with options', function (it) {
-      var file = processor()
-        .use(frontmatter, [ 'toml' ])
-        .use(extract, { toml: toml })
-        .processSync(okToml)
-
-      it.ok(file.data.test)
-      it.ok(file.data.test === 'ok')
-      it.end()
-    })
-    t.test('Set a name to store frontmatter under', function (it) {
-      var file = processor()
-        .use(frontmatter)
-        .use(extract, { yaml: yaml, name: 'frontmatter' })
-        .processSync(okYaml)
-
-      it.ok(file.data)
-      it.ok(file.data.frontmatter)
-      it.ok(file.data.frontmatter.test === 'ok')
-      it.end()
+        test.ok(JSON.stringify(file.data) === '{}')
+        test.end()
     })
 
-    t.test('Creates a VFile message when parser fails to parse frontmatter', function (it) {
-      var file = processor()
-        .use(frontmatter, [ 'toml' ])
-        .use(extract, { toml: toml })
-        .processSync(badToml)
+    test.test('Extracts frontmatter given a parse', test => {
+        const file = processor()
+            .use(extract, yaml)
+            .processSync(okYaml)
 
-      it.ok(file.data)
-      it.ok(JSON.stringify(file.data) === '{}')
-      it.ok(file.messages[0])
-      it.ok(file.messages[0].message === 'Expected "=", [ \\t] or [A-Za-z0-9_\\-] but ":" found.')
-      it.end()
+        test.ok(file.data.test === 'ok')
+        test.end()
     })
-  })
 
-  t.doesNotThrow(function () {
-    unified()
-      .use(parser)
-      .use(compiler)
-      .use(frontmatter)
-      .use(extract, { toml: toml })
-      .freeze()
-  }, 'should not throw if wrong parsing function is given')
+    test.test('Works with parser as option', test => {
+        const file = processor()
+            .use(extract, { yaml })
+            .processSync(okYaml)
 
-  t.doesNotThrow(function () {
-    unified()
-      .use(extract, yaml)
-      .freeze()
-  }, 'should not throw without parser')
-
-  t.test('Should throw with `options.throws` and bad frontmatter', function (it) {
-    it.throws(function () {
-      processor()
-        .use(frontmatter, [ 'toml' ])
-        .use(extract, { toml: toml, throws: true })
-        .processSync(badToml)
+        test.ok(file.data.test === 'ok')
+        test.end()
     })
-    it.end()
-  })
 
-  t.end()
+    test.test('Works with different parsers', test => {
+        const file = processor()
+            .use(extract, { toml })
+            .processSync(okToml)
+
+        test.ok(file.data.test === 'ok')
+        test.end()
+    })
+
+    test.test('Works with name option', test => {
+        const file = processor()
+            .use(extract, { yaml, name: 'frontmatter' })
+            .processSync(okYaml)
+
+        test.ok(file.data.frontmatter)
+        test.ok(file.data.frontmatter.test === 'ok')
+        test.end()
+    })
+
+    test.test('Should just bail if parser returns nothing', test => {
+        const file = processor()
+            .use(extract, { yaml: () => {} })
+            .processSync(okYaml)
+
+        test.ok(JSON.stringify(file.data) === '{}')
+        test.end()
+    })
+
+    test.test('Creates a VFile message when parser errors', test => {
+        const file = processor()
+            .use(extract, { toml })
+            .processSync(badToml)
+
+        test.ok(file.data)
+        test.ok(JSON.stringify(file.data) === '{}')
+        test.ok(file.messages[0].message === 'Expected "=", [ \\t] or [A-Za-z0-9_\\-] but ":" found.')
+        test.end()
+    })
+
+    test.test('Should throw with `options.thros` passed and a parse error', test => {
+        test.throws(() => {
+            processor()
+                .use(extract, { toml, throws: true })
+                .processSync(badToml)
+        })
+
+        test.end()
+    })
+
+    test.end()
 })
