@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015"],
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "remark-extract-frontmatter": ["index.d.ts"]
+    }
+  }
+}
