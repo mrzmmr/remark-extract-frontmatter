@@ -4,8 +4,10 @@
   "description": "Stores front matter from markdown in VFiles data property",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "types/index.d.ts"
   ],
+  "types": "types/index.d.ts",
   "scripts": {
     "test": "tap --100 test.js",
     "report": "nyc report --reporter=text-lcov | coveralls"
@@ -34,6 +36,7 @@
     "remark-frontmatter": "^3.0.0",
     "tap": "^14.10.8",
     "toml": "^2.3.3",
+    "unified": "^9.2.0",
     "yaml": "^1.0.0"
   },
   "dependencies": {}
