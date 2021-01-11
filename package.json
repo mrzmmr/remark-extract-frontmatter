@@ -4,7 +4,8 @@
   "description": "Stores front matter from markdown in VFiles data property",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "types/index.d.ts"
   ],
   "types": "types/index.d.ts",
   "scripts": {
