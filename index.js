@@ -25,7 +25,7 @@ module.exports = function extract(options = {}) {
                 return
             }
 
-            for (child of children) {
+            for (let child of children) {
                 if (each(child)) {
                     return 1
                 }
