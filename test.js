@@ -91,15 +91,14 @@ test('remark-extract-frontmatter', test => {
     })
 
     test.test('Should remove frontmatter nodes when `options.remove` passed', test => {
-      const file = processor()
-        .use(extract, { yaml, remove: true })
-        .processSync(okYamlMd)
-      
-      test.ok(file.data)
-      test.ok(file.data.test === 'ok')
-      test.ok(file.toString() === '# Header\n')
-
-      test.end()
+        const file = processor()
+            .use(extract, { yaml, remove: true })
+            .processSync(okYamlMd)
+        
+        test.ok(file.data)
+        test.ok(file.data.test === 'ok')
+        test.ok(file.toString() === '# Header\n')
+        test.end()
     })
 
     test.end()

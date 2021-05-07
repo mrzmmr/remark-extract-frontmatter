@@ -25,7 +25,6 @@ module.exports = function extract(options = {}) {
                 return
             }
 
-             
             for (let c = 0; c < children.length; c++) {
                 const child = children[c]
                 if (each(child)) {

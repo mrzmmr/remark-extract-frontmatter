@@ -121,8 +121,7 @@ Type: `Boolean`
 
 Default: `false`
 
-Indicate if we should remove parsed frontmatter from the `VFile`. The default
-behavior is to leave the parsed content in the `VFile`
+Indicate if we should remove parsed frontmatter from the `VFile`. The default behavior is to leave the parsed content in the `VFile`
 
 ### License
 
