@@ -25,8 +25,14 @@ module.exports = function extract(options = {}) {
                 return
             }
 
-            for (let child of children) {
+             
+            for (let c = 0; c < children.length; c++) {
+                const child = children[c]
                 if (each(child)) {
+                    if (options.remove) {
+                        children.splice(c, 1)
+                        c--
+                    }
                     return 1
                 }
             }

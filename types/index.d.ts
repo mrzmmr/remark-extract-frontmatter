@@ -32,6 +32,12 @@ declare namespace remarkExtractFrontmatter {
      * `VFile.fail` or continue and set a warning using `VFile.message`
      */
     throws?: boolean;
+    
+    /**
+     * Indicate if we should remove parsed frontmatter from the `VFile`. The 
+     * default behavior is to leave this content in the `VFile`
+     */
+    remove?: boolean;
   }
 }
 
