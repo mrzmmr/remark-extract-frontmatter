@@ -34,10 +34,9 @@
     "coveralls": "^3.0.2",
     "remark": "^13.0.0",
     "remark-frontmatter": "^3.0.0",
-    "tap": "^14.10.8",
-    "toml": "^2.3.3",
-    "unified": "^9.2.0",
-    "yaml": "^1.0.0"
-  },
-  "dependencies": {}
+    "tap": "^15.0.9",
+    "toml": "^3.0.0",
+    "unified": "^9.2.1",
+    "yaml": "^1.10.2"
+  }
 }
