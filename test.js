@@ -7,13 +7,12 @@ const extract = require('.')
 
 const okYaml = `---\ntest: ok\n---\n`
 const okToml = `+++\ntest = "ok"\n+++\n`
+const okYamlMd = `---\ntest: ok\n---\n# Header`
 const badToml = `+++\ntest: ok\n+++\n`
 
 test('remark-extract-frontmatter', test => {
     const processor = remark()
         .use(frontmatter, ['yaml', 'toml'])
-
-    let file
 
     test.test('Does nothing when given nothing', test => {
         const file = processor()
@@ -81,13 +80,24 @@ test('remark-extract-frontmatter', test => {
         test.end()
     })
 
-    test.test('Should throw with `options.thros` passed and a parse error', test => {
+    test.test('Should throw with `options.throws` passed and a parse error', test => {
         test.throws(() => {
             processor()
                 .use(extract, { toml, throws: true })
                 .processSync(badToml)
         })
 
+        test.end()
+    })
+
+    test.test('Should remove frontmatter nodes when `options.remove` passed', test => {
+        const file = processor()
+            .use(extract, { yaml, remove: true })
+            .processSync(okYamlMd)
+        
+        test.ok(file.data)
+        test.ok(file.data.test === 'ok')
+        test.ok(file.toString() === '# Header\n')
         test.end()
     })
 

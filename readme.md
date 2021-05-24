@@ -114,6 +114,15 @@ Default: `false`
 
 Specify if when an error parsing frontmatter occurs, to fail and throw error using `VFile.fail` or continue and set a warning using `VFile.message`.
 
+
+#### remove
+
+Type: `Boolean`
+
+Default: `false`
+
+Indicate if we should remove parsed frontmatter from the `VFile`. The default behavior is to leave the parsed content in the `VFile`
+
 ### License
 
 MIT &copy; Paul Zimmer
